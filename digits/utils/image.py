@@ -1,5 +1,5 @@
 # Copyright (c) 2014-2017, NVIDIA CORPORATION.  All rights reserved.
-from __future__ import absolute_import
+
 
 import math
 import os.path
@@ -7,9 +7,9 @@ import requests
 
 # Find the best implementation available
 try:
-    from cStringIO import StringIO
+    from io import StringIO
 except ImportError:
-    from StringIO import StringIO
+    from io import StringIO
 
 import numpy as np
 import PIL.Image
@@ -55,17 +55,17 @@ def load_image(path):
             stream = StringIO(r.content)
             image = PIL.Image.open(stream)
         except requests.exceptions.RequestException as e:
-            raise errors.LoadImageError, e.message
+            raise errors.LoadImageError(e.message)
         except IOError as e:
-            raise errors.LoadImageError, e.message
+            raise errors.LoadImageError(e.message)
     elif os.path.exists(path):
         try:
             image = PIL.Image.open(path)
             image.load()
         except IOError as e:
-            raise errors.LoadImageError, 'IOError: Trying to load "%s": %s' % (path, e.message)
+            raise errors.LoadImageError('IOError: Trying to load "%s": %s' % (path, e.message))
     else:
-        raise errors.LoadImageError, '"%s" not found' % path
+        raise errors.LoadImageError('"%s" not found' % path)
 
     if image.mode in ['L', 'RGB']:
         # No conversion necessary
@@ -87,7 +87,7 @@ def load_image(path):
         new.paste(image, mask=image.convert('RGBA'))
         return new
     else:
-        raise errors.LoadImageError, 'Image mode "%s" not supported' % image.mode
+        raise errors.LoadImageError('Image mode "%s" not supported' % image.mode)
 
 
 def upscale(image, ratio):
@@ -156,7 +156,7 @@ def image_to_array(image,
             if image.ndim != 2:
                 if image.ndim == 3 and image.shape[2] in [3, 4]:
                     # color to grayscale. throw away alpha
-                    image = np.dot(image[:, :, :3], [0.299, 0.587, 0.114]).astype(np.uint8)
+                    image = np.dot(image[:,:, :3], [0.299, 0.587, 0.114]).astype(np.uint8)
                 else:
                     raise ValueError('invalid image shape: %s' % (image.shape,))
         elif channels == 3:
@@ -165,18 +165,18 @@ def image_to_array(image,
                 image = np.repeat(image, 3).reshape(image.shape + (3,))
             elif image.shape[2] == 4:
                 # throw away alpha
-                image = image[:, :, :3]
+                image = image[:,:, :3]
             elif image.shape[2] != 3:
                 raise ValueError('invalid image shape: %s' % (image.shape,))
         elif channels == 4:
             if image.ndim == 2:
                 # grayscale to color
                 image = np.repeat(image, 4).reshape(image.shape + (4,))
-                image[:, :, 3] = 255
+                image[:,:, 3] = 255
             elif image.shape[2] == 3:
                 # add alpha
                 image = np.append(image, np.zeros(image.shape[:2] + (1,), dtype='uint8'), axis=2)
-                image[:, :, 3] = 255
+                image[:,:, 3] = 255
             elif image.shape[2] != 4:
                 raise ValueError('invalid image shape: %s' % (image.shape,))
     else:
@@ -237,7 +237,7 @@ def resize_image(image, height, width,
             return image[:, start:start + width]
         else:
             start = int(round((resize_height - height) / 2.0))
-            return image[start:start + height, :]
+            return image[start:start + height,:]
     else:
         if resize_mode == 'fill':
             # resize to biggest of ratios (relatively smaller image), keeping aspect ratio
@@ -268,7 +268,7 @@ def resize_image(image, height, width,
                 image = image[:, start:start + width]
             else:
                 start = int(round((resize_height - height) / 2.0))
-                image = image[start:start + height, :]
+                image = image[start:start + height,:]
         else:
             raise Exception('unrecognized resize_mode "%s"' % resize_mode)
 
@@ -368,13 +368,13 @@ def get_layer_vis_square(data,
             # (N, H, W, 3)
             data = data.transpose(1, 2, 3, 0)
             if channel_order == 'BGR':
-                data = data[:, :, :, [2, 1, 0]]  # BGR to RGB (see issue #59)
+                data = data[:,:,:, [2, 1, 0]]  # BGR to RGB (see issue #59)
         elif data.shape[1] == 3:
             # interpret as HxW color images
             # (N, H, W, 3)
             data = data.transpose(0, 2, 3, 1)
             if channel_order == 'BGR':
-                data = data[:, :, :, [2, 1, 0]]  # BGR to RGB (see issue #59)
+                data = data[:,:,:, [2, 1, 0]]  # BGR to RGB (see issue #59)
         else:
             # interpret as HxW grayscale images
             # (N, H, W)
@@ -444,9 +444,9 @@ def vis_square(images,
         # they're grayscale - convert to a colormap
         redmap, greenmap, bluemap = get_color_map(colormap)
 
-        red = np.interp(images * (len(redmap) - 1) / 255.0, xrange(len(redmap)), redmap)
-        green = np.interp(images * (len(greenmap) - 1) / 255.0, xrange(len(greenmap)), greenmap)
-        blue = np.interp(images * (len(bluemap) - 1) / 255.0, xrange(len(bluemap)), bluemap)
+        red = np.interp(images * (len(redmap) - 1) / 255.0, range(len(redmap)), redmap)
+        green = np.interp(images * (len(greenmap) - 1) / 255.0, range(len(greenmap)), greenmap)
+        blue = np.interp(images * (len(bluemap) - 1) / 255.0, range(len(bluemap)), bluemap)
 
         # Slap the channels back together
         images = np.concatenate((red[..., np.newaxis], green[..., np.newaxis], blue[..., np.newaxis]), axis=3)
@@ -511,7 +511,7 @@ def get_color_map(name):
         bluemap = [1, 0.5]
     else:
         if name != 'jet':
-            print 'Warning: colormap "%s" not supported. Using jet instead.' % name
+            print('Warning: colormap "%s" not supported. Using jet instead.' % name)
         redmap = [0, 0, 0, 0, 0.5, 1, 1, 1, 0.5]
         greenmap = [0, 0, 0.5, 1, 1, 1, 0.5, 0, 0]
         bluemap = [0.5, 1, 1, 1, 0.5, 0, 0, 0, 0]

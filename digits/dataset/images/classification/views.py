@@ -1,14 +1,14 @@
 # Copyright (c) 2014-2017, NVIDIA CORPORATION.  All rights reserved.
-from __future__ import absolute_import
+
 
 import os
 import shutil
 
 # Find the best implementation available
 try:
-    from cStringIO import StringIO
+    from io import StringIO
 except ImportError:
-    from StringIO import StringIO
+    from io import StringIO
 
 import caffe_pb2
 import flask
@@ -499,7 +499,7 @@ def explore():
             total_entries = label_entries
 
     max_page = min((total_entries - 1) / size, page + 5)
-    pages = range(min_page, max_page + 1)
+    pages = list(range(min_page, max_page + 1))
     for key, value in reader.entries():
         if count >= page * size:
             datum = caffe_pb2.Datum()
@@ -517,11 +517,11 @@ def explore():
                     arr = arr.transpose((1, 2, 0))
                     if arr.shape[2] == 1:
                         # HWC -> HW
-                        arr = arr[:, :, 0]
+                        arr = arr[:,:, 0]
                     elif arr.shape[2] == 3:
                         # BGR -> RGB
                         # XXX see issue #59
-                        arr = arr[:, :, [2, 1, 0]]
+                        arr = arr[:,:, [2, 1, 0]]
                     img = PIL.Image.fromarray(arr)
                 imgs.append({"label": labels[datum.label], "b64": utils.image.embed_image_html(img)})
         if label is None:

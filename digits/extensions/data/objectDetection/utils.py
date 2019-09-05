@@ -11,7 +11,7 @@ class ObjectType:
 
     Dontcare, Car, Van, Truck, Bus, Pickup, VehicleWithTrailer, SpecialVehicle,\
         Person, Person_fa, Person_unsure, People, Cyclist, Tram, Person_Sitting,\
-        Misc = range(16)
+        Misc = list(range(16))
 
     def __init__(self):
         pass
@@ -172,7 +172,7 @@ class GroundTruth:
     def load_gt_obj(self):
         """ load bbox ground truth from files either via the provided label directory or list of label files"""
         files = os.listdir(self.label_dir)
-        files = filter(lambda x: x.endswith(self.label_ext), files)
+        files = [x for x in files if x.endswith(self.label_ext)]
         if len(files) == 0:
             raise RuntimeError('error: no label files found in %s' % self.label_dir)
         for label_file in files:
@@ -245,7 +245,7 @@ def bbox_to_array(arr, label=0, max_bboxes=64, bbox_width=16):
     3-dimensional array CHW array
     """
     arr = pad_bbox(arr, max_bboxes, bbox_width)
-    return arr[np.newaxis, :, :]
+    return arr[np.newaxis,:,:]
 
 
 def bbox_overlap(abox, bbox):

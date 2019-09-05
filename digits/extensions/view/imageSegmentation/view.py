@@ -1,5 +1,5 @@
 """Copyright (c) 2016-2017, NVIDIA CORPORATION.  All rights reserved."""
-from __future__ import absolute_import
+
 
 import json
 import os
@@ -178,7 +178,7 @@ class Visualization(VisualizationInterface):
         """Process one inference and return data to visualize."""
         # assume the only output is a CHW image where C is the number
         # of classes, H and W are the height and width of the image
-        class_data = output_data[output_data.keys()[0]].astype('float32')
+        class_data = output_data[list(output_data.keys())[0]].astype('float32')
 
         # Is this binary segmentation?
         is_binary = class_data.shape[0] == 2
@@ -194,18 +194,18 @@ class Visualization(VisualizationInterface):
             fill_data = (self.map.to_rgba(class_data) * 255).astype('uint8')
         else:
             fill_data = np.ndarray((class_data.shape[0], class_data.shape[1], 4), dtype='uint8')
-            for x in xrange(3):
-                fill_data[:, :, x] = class_data.copy()
+            for x in range(3):
+                fill_data[:,:, x] = class_data.copy()
 
         # Assuming that class 0 is the background
         mask = np.greater(class_data, 0)
-        fill_data[:, :, 3] = mask * 255
+        fill_data[:,:, 3] = mask * 255
         line_data = fill_data.copy()
         seg_data = fill_data.copy()
 
         # Black mask of non-segmented pixels
         mask_data = np.zeros(fill_data.shape, dtype='uint8')
-        mask_data[:, :, 3] = (1 - mask) * 255
+        mask_data[:,:, 3] = (1 - mask) * 255
 
         def normalize(array):
             mn = array.min()
@@ -233,10 +233,10 @@ class Visualization(VisualizationInterface):
                 line_mask |= c_mask & np.less(distance, line_width)
                 max_distance = np.maximum(max_distance, distance + 128)
 
-            line_data[:, :, 3] = line_mask * 255
+            line_data[:,:, 3] = line_mask * 255
             max_distance = np.maximum(max_distance, np.zeros(max_distance.shape, dtype=float))
             max_distance = np.minimum(max_distance, np.zeros(max_distance.shape, dtype=float) + 255)
-            seg_data[:, :, 3] = max_distance
+            seg_data[:,:, 3] = max_distance
 
         # Input image with outlines
         input_max = input_data.max()

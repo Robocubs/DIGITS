@@ -1,5 +1,5 @@
 # Copyright (c) 2016-2017, NVIDIA CORPORATION.  All rights reserved.
-from __future__ import absolute_import
+
 
 import os.path
 import re
@@ -40,8 +40,8 @@ class TestVersion():
         import digits
         filename = os.path.join(os.path.dirname(digits.__file__), 'version.py')
         file_locals = {}
-        execfile(filename, {}, file_locals)
-        assert file_locals.keys() == ['__version__'], \
+        exec(compile(open(filename, "rb").read(), filename, 'exec'), {}, file_locals)
+        assert list(file_locals.keys()) == ['__version__'], \
             'version.py should only declare a single variable'
         self.check_version(file_locals['__version__'])
 

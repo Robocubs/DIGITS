@@ -10,9 +10,9 @@ import PIL.Image
 import os
 import sys
 try:
-    from cStringIO import StringIO
+    from io import StringIO
 except ImportError:
-    from StringIO import StringIO
+    from io import StringIO
 
 # Add path for DIGITS package
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
@@ -108,11 +108,11 @@ def infer(input_list,
                 arr = arr.transpose((1, 2, 0))
                 if arr.shape[2] == 1:
                     # HWC -> HW
-                    arr = arr[:, :, 0]
+                    arr = arr[:,:, 0]
                 elif arr.shape[2] == 3:
                     # BGR -> RGB
                     # XXX see issue #59
-                    arr = arr[:, :, [2, 1, 0]]
+                    arr = arr[:,:, [2, 1, 0]]
                 img = arr
             input_ids.append(key)
             input_data.append(img)
@@ -142,7 +142,7 @@ def infer(input_list,
                 input_data.append(image)
                 n_input_samples = n_input_samples + 1
             except utils.errors.LoadImageError as e:
-                print e
+                print(e)
 
     # perform inference
     visualizations = None

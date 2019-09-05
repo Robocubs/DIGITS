@@ -1,12 +1,12 @@
 # Copyright (c) 2016-2017, NVIDIA CORPORATION.  All rights reserved.
-from __future__ import absolute_import
+
 
 import os
 # Find the best implementation available
 try:
-    from cStringIO import StringIO
+    from io import StringIO
 except ImportError:
-    from StringIO import StringIO
+    from io import StringIO
 
 import caffe_pb2
 import flask
@@ -173,7 +173,7 @@ def explore():
     total_entries = reader.total_entries
 
     max_page = min((total_entries - 1) / size, page + 5)
-    pages = range(min_page, max_page + 1)
+    pages = list(range(min_page, max_page + 1))
     for key, value in reader.entries():
         if count >= page * size:
             datum = caffe_pb2.Datum()
@@ -189,7 +189,7 @@ def explore():
                 data = cmap.to_rgba(data) * 255
                 data = data.astype('uint8')
                 # keep RGB values only, remove alpha channel
-                data = data[:, :, 0:3]
+                data = data[:,:, 0:3]
                 img = PIL.Image.fromarray(data)
             imgs.append({"label": None, "b64": utils.image.embed_image_html(img)})
         count += 1

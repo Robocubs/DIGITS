@@ -6,7 +6,7 @@ from collections import Counter
 import logging
 import math
 import os
-import Queue
+import queue
 import random
 import re
 import shutil
@@ -16,9 +16,9 @@ import time
 
 # Find the best implementation available
 try:
-    from cStringIO import StringIO
+    from io import StringIO
 except ImportError:
-    from StringIO import StringIO
+    from io import StringIO
 
 import h5py
 import lmdb
@@ -35,7 +35,7 @@ import caffe.io  # noqa
 import caffe_pb2  # noqa
 
 if digits.config.config_value('tensorflow')['enabled']:
-    import tensorflow as tf
+    from . import tensorflow as tf
 else:
     tf = None
 
@@ -270,7 +270,7 @@ def create_db(input_file, output_dir,
 
     # Load lines from input_file into a load_queue
 
-    load_queue = Queue.Queue()
+    load_queue = queue.Queue()
     image_count = _fill_load_queue(input_file, load_queue, shuffle)
 
     # Start some load threads
@@ -279,10 +279,10 @@ def create_db(input_file, output_dir,
                                        bool(backend == 'hdf5'), kwargs.get('hdf5_dset_limit'),
                                        image_channels, image_height, image_width)
     num_threads = _calculate_num_threads(batch_size, shuffle)
-    write_queue = Queue.Queue(2 * batch_size)
-    summary_queue = Queue.Queue()
+    write_queue = queue.Queue(2 * batch_size)
+    summary_queue = queue.Queue()
 
-    for _ in xrange(num_threads):
+    for _ in range(num_threads):
         p = threading.Thread(target=_load_thread,
                              args=(load_queue, write_queue, summary_queue,
                                    image_width, image_height, image_channels,
@@ -355,7 +355,7 @@ def _create_tfrecords(image_count, write_queue, batch_size, output_dir,
 
     writers = []
     with open(os.path.join(output_dir, LIST_FILENAME), 'w') as outfile:
-        for shard_id in xrange(num_shards):
+        for shard_id in range(num_shards):
             shard_name = 'SHARD_%03d.tfrecords' % (shard_id)
             filename = os.path.join(output_dir, shard_name)
             writers.append(tf.python_io.TFRecordWriter(filename))
@@ -676,7 +676,7 @@ def _load_thread(load_queue, write_queue, summary_queue,
     while not load_queue.empty():
         try:
             path, label = load_queue.get(True, 0.05)
-        except Queue.Empty:
+        except queue.Empty:
             continue
 
         # prepend path with image_folder, if appropriate
@@ -781,7 +781,7 @@ def _array_to_datum(image, label, encoding):
                 image = image[[2, 1, 0], ...]
         elif image.ndim == 2:
             # Add a channels axis
-            image = image[np.newaxis, :, :]
+            image = image[np.newaxis,:,:]
         else:
             raise Exception('Image has unrecognized shape: "%s"' % image.shape)
         datum = caffe.io.array_to_datum(image, label)
@@ -853,7 +853,7 @@ def _save_means(image_sum, image_count, mean_files):
                     data = data[[2, 1, 0], ...]
             elif mean.ndim == 2:
                 # Add a channels axis
-                data = data[np.newaxis, :, :]
+                data = data[np.newaxis,:,:]
 
             blob = caffe_pb2.BlobProto()
             blob.num = 1

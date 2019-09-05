@@ -1,5 +1,5 @@
 # Copyright (c) 2015-2017, NVIDIA CORPORATION.  All rights reserved.
-from __future__ import absolute_import
+
 
 import imp
 import os
@@ -37,9 +37,9 @@ def load_from_envvar(envvar):
         import_pycaffe(python_dir)
         version, flavor = get_version_and_flavor(executable)
     except:
-        print ('"%s" from %s does not point to a valid installation of Caffe.'
-               % (value, envvar))
-        print 'Use the envvar CAFFE_ROOT to indicate a valid installation.'
+        print(('"%s" from %s does not point to a valid installation of Caffe.'
+               % (value, envvar)))
+        print('Use the envvar CAFFE_ROOT to indicate a valid installation.')
         raise
     return executable, version, flavor
 
@@ -57,8 +57,8 @@ def load_from_path():
         import_pycaffe()
         version, flavor = get_version_and_flavor(executable)
     except:
-        print 'A valid Caffe installation was not found on your system.'
-        print 'Use the envvar CAFFE_ROOT to indicate a valid installation.'
+        print('A valid Caffe installation was not found on your system.')
+        print('Use the envvar CAFFE_ROOT to indicate a valid installation.')
         raise
     return executable, version, flavor
 
@@ -125,7 +125,7 @@ def import_pycaffe(dirname=None):
     try:
         import caffe
     except ImportError:
-        print 'Did you forget to "make pycaffe"?'
+        print('Did you forget to "make pycaffe"?')
         raise
 
     # Strange issue with protocol buffers and pickle - see issue #32
@@ -181,7 +181,7 @@ def get_version_from_cmdline(executable):
     command = [executable, '-version']
     p = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     if p.wait():
-        print p.stderr.read().strip()
+        print(p.stderr.read().strip())
         raise RuntimeError('"%s" returned error code %s' % (command, p.returncode))
 
     pattern = 'version'
@@ -195,7 +195,7 @@ def get_version_from_soname(executable):
     command = ['ldd', executable]
     p = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     if p.wait():
-        print p.stderr.read().strip()
+        print(p.stderr.read().strip())
         raise RuntimeError('"%s" returned error code %s' % (command, p.returncode))
 
     # Search output for caffe library

@@ -10,9 +10,9 @@ the correct functions for the respective backends.
 
 """
 
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
+
+
+
 
 from PIL import Image
 import logging
@@ -131,7 +131,7 @@ class MeanLoader(object):
                 data = np.reshape(data, (1, 1, -1))
             elif len(data.shape) != 3:
                 # Explicitly add channel dim
-                data = data[:, :, None]
+                data = data[:,:, None]
 
             # return data in original pixel scale
             self.tf_mean_image = tf.constant(data, name='Const_Mean_Image')

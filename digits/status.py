@@ -1,5 +1,5 @@
 # Copyright (c) 2014-2017, NVIDIA CORPORATION.  All rights reserved.
-from __future__ import absolute_import
+
 
 import time
 
@@ -36,17 +36,17 @@ class Status():
     # Operators
 
     def __eq__(self, other):
-        if type(other) == type(self):
+        if isinstance(other, type(self)):
             return self.val == other.val
-        elif type(other) == str:
+        elif isinstance(other, str):
             return self.val == other
         else:
             return False
 
     def __ne__(self, other):
-        if type(other) == type(self):
+        if isinstance(other, type(self)):
             return self.val != other.val
-        elif type(other) == str:
+        elif isinstance(other, str):
             return self.val != other
         else:
             return True
