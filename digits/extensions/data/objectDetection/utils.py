@@ -246,7 +246,7 @@ def bbox_to_array(arr, label=0, max_bboxes=64, bbox_width=16):
     3-dimensional array CHW array
     """
     arr = pad_bbox(arr, max_bboxes, bbox_width)
-    return arr[np.newaxis,:,:]
+    return arr[np.newaxis, :, :]
 
 
 def bbox_overlap(abox, bbox):

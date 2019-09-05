@@ -43,7 +43,7 @@ def create_classification_imageset(
     for class_name, pixel_index, rotation, image_count in config:
         os.makedirs(os.path.join(folder, class_name))
 
-        colors = np.linspace(200, 255, image_count)
+        colors = np.linspace(200, 255, num=image_count)
         for i, color in enumerate(colors):
             pixel = [0, 0, 0]
             pixel[pixel_index] = color
@@ -60,12 +60,14 @@ def _create_gradient_image(size, color_from, color_to, rotation):
     Make an image with a color gradient with a specific rotation
     """
     # create gradient
-    rgb_arrays = [np.linspace(color_from[x], color_to[x], size).astype('uint8') for x in range(3)]
+    rgb_arrays = [np.linspace(color_from[x], color_to[x], num=size).astype('uint8') for x in range(3)]
     gradient = np.concatenate(rgb_arrays)
 
     # extend to 2d
     picture = np.repeat(gradient, size)
-    picture.shape = (3, size, size)
+    # uncertain whether to convert this to reshape or not...
+    # picture.shape = (3, size, size)
+    picture.reshape(3, size, size)
 
     # make image and rotate
     image = PIL.Image.fromarray(picture.T)

@@ -85,7 +85,7 @@ class DataIngestion(DataIngestionInterface):
 
         if img.ndim == 2:
             # grayscale
-            img = img[np.newaxis,:,:]
+            img = img[np.newaxis, :, :]
             if img.dtype == 'uint16':
                 img = img.astype(float)
         else:

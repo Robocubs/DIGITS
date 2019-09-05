@@ -141,7 +141,7 @@ class BaseViewsTestWithDataset(BaseViewsTest):
             cls.imageset_folder = tempfile.mkdtemp()
             for i in range(num_images):
                 x = np.random.randint(
-                    low=0,
+                    0,
                     high=256,
                     size=(image_height, image_width))
                 x = x.astype('uint8')
@@ -164,10 +164,10 @@ class BaseViewsTestWithDataset(BaseViewsTest):
             # create a temporary folder
             cls.imageset_folder = tempfile.mkdtemp()
             for i in range(num_images):
-                image_width = np.random.randint(low=8, high=32)
-                image_height = np.random.randint(low=8, high=32)
+                image_width = np.random.randint(8, high=32)
+                image_height = np.random.randint(8, high=32)
                 x = np.random.randint(
-                    low=0,
+                    0,
                     high=256,
                     size=(image_height, image_width))
                 x = x.astype('uint8')

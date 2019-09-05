@@ -73,7 +73,7 @@ def create_lmdbs(folder, image_width=None, image_height=None, image_count=None):
                              map_async=True,
                              max_dbs=0)
 
-        image_sum = np.zeros((image_height, image_width), 'float64')
+        image_sum = np.zeros((image_height, image_width))
 
         for i in range(image_count):
             xslope, yslope = np.random.random_sample(2) - 0.5
