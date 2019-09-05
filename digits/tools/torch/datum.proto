@@ -1,4 +1,5 @@
 // Copyright (c) 2015-2017, NVIDIA CORPORATION. All rights reserved.
+# Copyright (C) 2019, Nicholas Hubbard and contributors.
 message Datum {
 optional int32 channels = 1;
 optional int32 height = 2;

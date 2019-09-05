@@ -1,5 +1,6 @@
 --[[
 Copyright (c) 2015-2017, NVIDIA CORPORATION. All rights reserved.
+# Copyright (C) 2019, Nicholas Hubbard and contributors.
 
 Copyright (c) 2004 Elad Hoffer
 

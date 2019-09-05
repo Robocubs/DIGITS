@@ -2,6 +2,7 @@
 ====================
 
 Copyright © 2014-2017, NVIDIA CORPORATION. All rights reserved.
+# Copyright (C) 2019, Nicholas Hubbard and contributors.
 Copyright © 2019, Nicholas Hubbard and contributors.
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:

@@ -1,4 +1,5 @@
 -- Copyright (c) 2015-2017, NVIDIA CORPORATION. All rights reserved.
+# Copyright (C) 2019, Nicholas Hubbard and contributors.
 
 -- retrieve path to this script so we can import and invoke scripts that
 -- are in the same directory

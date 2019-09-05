@@ -1,4 +1,5 @@
 // Copyright (c) 2014-2017, NVIDIA CORPORATION.  All rights reserved.
+# Copyright (C) 2019, Nicholas Hubbard and contributors.
 function drawCombinedGraph(data) {
     $('.combined-graph').show();
     // drawCombinedGraph.chart is a static variable that holds the graph state;

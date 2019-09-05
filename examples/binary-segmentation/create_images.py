@@ -1,5 +1,6 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # Copyright (c) 2016-2017, NVIDIA CORPORATION.  All rights reserved.
+# Copyright (C) 2019, Nicholas Hubbard and contributors.
 """
 Functions for creating a dummy image segmentation dataset
 """

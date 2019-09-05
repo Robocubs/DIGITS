@@ -1,5 +1,6 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # Copyright (c) 2016, NVIDIA CORPORATION.  All rights reserved.
+# Copyright (C) 2019, Nicholas Hubbard and contributors.
 #
 # This document should comply with PEP-8 Style Guide
 # Linter: pylint

@@ -1,5 +1,6 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # Copyright (c) 2014-2017, NVIDIA CORPORATION.  All rights reserved.
+# Copyright (C) 2019, Nicholas Hubbard and contributors.
 
 import argparse
 from collections import Counter

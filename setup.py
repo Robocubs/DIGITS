@@ -1,14 +1,16 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # Copyright (c) 2016-2017, NVIDIA CORPORATION.  All rights reserved.
+# Copyright (C) 2019, Nicholas Hubbard and contributors.
 
 import os.path
 import setuptools
+from typing import Dict
 
 LOCAL_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # Get current __version__
-version_locals = {}
-execfile(os.path.join(LOCAL_DIR, 'digits', 'version.py'), {}, version_locals)
+version_locals: Dict = {}
+exec(compile(open(os.path.join(LOCAL_DIR, 'digits', 'version.py'), "rb").read(), os.path.join(LOCAL_DIR, 'digits', 'version.py'), 'exec'), {}, version_locals)
 
 # Get requirements
 requirements = []
@@ -49,3 +51,4 @@ setuptools.setup(
     extras_require={'test': test_requirements},
     scripts=['digits-devserver'],
 )
+>

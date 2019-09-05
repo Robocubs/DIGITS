@@ -1,5 +1,6 @@
-#!/usr/bin/env python2
-# Copyright (c) 2015-2017, NVIDIA CORPORATION.  All rights reserved.
+#!/usr/bin/env python
+# Copyright (C) 2015-2017, NVIDIA CORPORATION. All rights reserved.
+# Copyright (C) 2019, Nicholas Hubbard and contributors.
 
 """
 Classify an image using a model archive file
