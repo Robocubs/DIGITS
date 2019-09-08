@@ -461,8 +461,10 @@ def add_warning(form, warning):
 # get from the job depending on function.
 
 
-def iterate_over_form(job, form, function, prefix=['form'], indent=''):
+def iterate_over_form(job, form, function, prefix=None, indent=''):
 
+    if prefix is None:
+        prefix = ['form']
     warnings = False
     if not hasattr(form, '__dict__'):
         return False

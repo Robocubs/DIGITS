@@ -179,10 +179,10 @@ class InferenceTask(Task):
                 # we reserve the first available GPU, if there are any
                 gpu_key = 'gpus'
                 if resources[gpu_key]:
-                    for resource in resources[gpu_key]:
-                        if resource.remaining() >= 1:
-                            self.gpu = int(resource.identifier)
-                            reserved_resources[gpu_key] = [(resource.identifier, 1)]
+                    for res in resources[gpu_key]:
+                        if res.remaining() >= 1:
+                            self.gpu = int(res.identifier)
+                            reserved_resources[gpu_key] = [(res.identifier, 1)]
                             break
                 return reserved_resources
         return None
@@ -207,7 +207,7 @@ class InferenceTask(Task):
             args.append('--layers=none')
 
         if self.gpu is not None:
-            args.append('--gpu=%d' % self.gpu)
+            args.append('--gpu=%d' % elf.gpu)
 
         if self.image_list_path is None:
             args.append('--db')

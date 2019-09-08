@@ -1,14 +1,14 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Copyright (c) 2016-2017, NVIDIA CORPORATION.  All rights reserved.
 # Copyright (C) 2019, Nicholas Hubbard and contributors.
 
 set -e
 
 echo "=== Checking for Python lint ..."
-if which flake8 >/dev/null 2>&1; then
-    python2 `which flake8` --exclude ./digits/jobs .
+if command -v flake8 >/dev/null 2>&1; then
+    python3 "$(command -v flake8)" --exclude ./digits/jobs .
 else
-    python2 -m flake8 --exclude ./digits/jobs .
+    python3 -m flake8 --exclude ./digits/jobs .
 fi
 
 echo "=== Checking for JavaScript lint ..."

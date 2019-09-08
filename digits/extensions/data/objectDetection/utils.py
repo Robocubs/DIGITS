@@ -225,7 +225,7 @@ class GroundTruth:
 def pad_bbox(arr, max_bboxes=64, bbox_width=16):
     if arr.shape[0] > max_bboxes:
         raise ValueError(
-            'Too many bounding boxes (%d > %d)' % arr.shape[0], max_bboxes
+            'Too many bounding boxes (%d > %d)' % (arr.shape[0], max_bboxes)
         )
     # fill remainder with zeroes:
     data = np.zeros((max_bboxes + 1, bbox_width), dtype='float')

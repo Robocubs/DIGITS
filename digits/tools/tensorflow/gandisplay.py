@@ -155,13 +155,15 @@ class TestFrame(wx.Frame):
     SLIDER_BORDER = 50
     STATUS_HEIGHT = 20
 
-    def __init__(self, parent=None, grid_size=640, attributes=[]):
+    def __init__(self, parent=None, grid_size=640, attributes=None):
         wx.Frame.__init__(self, parent,
                           size=(grid_size + self.SLIDER_WIDTH + self.SLIDER_BORDER, grid_size + self.STATUS_HEIGHT),
                           title="GAN Demo",
                           style=wx.DEFAULT_FRAME_STYLE ^ wx.RESIZE_BORDER)
 
         # Set up the MenuBar
+        if attributes is None:
+            attributes = []
         MenuBar = wx.MenuBar()
 
         file_menu = wx.Menu()

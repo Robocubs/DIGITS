@@ -417,11 +417,8 @@ class BaseTestCreation(BaseViewsTestWithDataset):
         content = json.loads(rv.data)
         assert len(content['snapshots']), 'should have at least snapshot'
 
-        options = {
-            'method': 'previous',
-            'previous_networks': job1_id,
-        }
-        options['%s-snapshot' % job1_id] = content['snapshots'][-1]
+        options = {'method': 'previous', 'previous_networks': job1_id,
+                   '%s-snapshot' % job1_id: content['snapshots'][-1]}
 
         job2_id = self.create_model(**options)
         assert self.model_wait_completion(job2_id) == 'Done', 'second job failed'
@@ -434,18 +431,11 @@ class BaseTestCreation(BaseViewsTestWithDataset):
         assert rv.status_code == 200, 'json load failed with %s' % rv.status_code
         content = json.loads(rv.data)
         assert len(content['snapshots']), 'should have at least snapshot'
-        options_2 = {
-            'method': 'previous',
-            'previous_networks': job1_id,
-        }
-        options_2['%s-snapshot' % job1_id] = content['snapshots'][-1]
+        options_2 = {'method': 'previous', 'previous_networks': job1_id,
+                     '%s-snapshot' % job1_id: content['snapshots'][-1]}
         job2_id = self.create_model(**options_2)
         assert self.model_wait_completion(job2_id) == 'Done', 'second job failed'
-        options_3 = {
-            'method': 'previous',
-            'previous_networks': job2_id,
-        }
-        options_3['%s-snapshot' % job2_id] = -1
+        options_3 = {'method': 'previous', 'previous_networks': job2_id, '%s-snapshot' % job2_id: -1}
         job3_id = self.create_model(**options_3)
         assert self.model_wait_completion(job3_id) == 'Done', 'third job failed'
 
@@ -736,8 +726,7 @@ class BaseTestCreatedWithGradientDataExtension(BaseTestCreatedWithAnyDataset,
         assert rv.status_code == 200, 'POST failed with %s' % rv.status_code
         data = json.loads(rv.data)
         output = data['outputs'][list(data['outputs'].keys())[0]]['output']
-        assert output[0] > 0 and \
-            output[1] < 0, \
+        assert output[0] > 0 > output[1], \
             'image regression result is wrong: %s' % data['outputs']['output']
 
 

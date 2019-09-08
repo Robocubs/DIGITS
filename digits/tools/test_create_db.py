@@ -7,7 +7,7 @@ import shutil
 import tempfile
 import queue
 
-import nose.tools
+import nose2.tools
 import numpy as np
 import PIL.Image
 

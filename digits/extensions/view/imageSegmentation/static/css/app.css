@@ -7,8 +7,8 @@
  img.overlay {
      float: left;
      position: absolute;
-     left: 0px;
-     top: 0px;
+     left: 0;
+     top: 0;
  }
  caption {
      caption-side: bottom;

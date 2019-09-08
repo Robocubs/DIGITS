@@ -224,7 +224,9 @@ class LoaderFactory(object):
     def get_key_index(self, key):
         return self.keys.index(key)
 
-    def set_augmentation(self, mean_loader, aug_dict={}):
+    def set_augmentation(self, mean_loader, aug_dict=None):
+        if aug_dict is None:
+            aug_dict = {}
         with tf.device('/cpu:0'):
             self.mean_loader = mean_loader
             self.aug_dict = aug_dict

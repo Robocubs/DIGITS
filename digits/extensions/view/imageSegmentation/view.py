@@ -94,13 +94,15 @@ class Visualization(VisualizationInterface):
             os.path.join(extension_dir, CONFIG_TEMPLATE), "r").read()
         return (template, {'form': form})
 
-    def get_legend_for(self, found_classes, skip_classes=[]):
+    def get_legend_for(self, found_classes, skip_classes=None):
         """Return the legend color image squares and text for each class.
 
         :param found_classes: list of class indices
         :param skip_classes: list of class indices to skip
         :return: list of dicts of text hex_color for each class
         """
+        if skip_classes is None:
+            skip_classes = []
         legend = []
         for c in (x for x in found_classes if x not in skip_classes):
             # create hex color associated with the category ID

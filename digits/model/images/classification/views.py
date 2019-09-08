@@ -267,18 +267,10 @@ def create():
                     gpu_count = None
 
             # Set up data augmentation structure
-            data_aug = {}
-            data_aug['flip'] = form.aug_flip.data
-            data_aug['quad_rot'] = form.aug_quad_rot.data
-            data_aug['rot'] = form.aug_rot.data
-            data_aug['scale'] = form.aug_scale.data
-            data_aug['noise'] = form.aug_noise.data
-            data_aug['contrast'] = form.aug_contrast.data
-            data_aug['whitening'] = form.aug_whitening.data
-            data_aug['hsv_use'] = form.aug_hsv_use.data
-            data_aug['hsv_h'] = form.aug_hsv_h.data
-            data_aug['hsv_s'] = form.aug_hsv_s.data
-            data_aug['hsv_v'] = form.aug_hsv_v.data
+            data_aug = {'flip': form.aug_flip.data, 'quad_rot': form.aug_quad_rot.data, 'rot': form.aug_rot.data,
+                        'scale': form.aug_scale.data, 'noise': form.aug_noise.data, 'contrast': form.aug_contrast.data,
+                        'whitening': form.aug_whitening.data, 'hsv_use': form.aug_hsv_use.data,
+                        'hsv_h': form.aug_hsv_h.data, 'hsv_s': form.aug_hsv_s.data, 'hsv_v': form.aug_hsv_v.data}
 
             # Python Layer File may be on the server or copied from the client.
             fs.copy_python_layer_file(

@@ -1,9 +1,8 @@
 {# Copyright (c) 2016-2017, NVIDIA CORPORATION.  All rights reserved.
 # Copyright (C) 2019, Nicholas Hubbard and contributors. #}
+{% extends "layout.html" %}
 
 {% from "helper.html" import print_flashes %}
-
-{% extends "layout.html" %}
 
 {% block head %}
 <script type="text/javascript" src="{{ url_for('static', filename='js/time_filters.js', ver=dir_hash) }}"></script>

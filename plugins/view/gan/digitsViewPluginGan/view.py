@@ -4,11 +4,7 @@ from __future__ import absolute_import
 
 import os
 
-# Find the best implementation available
-try:
-    from cStringIO import StringIO
-except ImportError:
-    from StringIO import StringIO
+from io import StringIO
 import pickle
 
 import imageio
