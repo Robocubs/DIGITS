@@ -19,6 +19,9 @@ addons:
         packages:
             - protobuf-compiler
             - libprotoc-dev
+            - caffe-cpu
+
+cache: pip
 
 install:
     - mkdir -p ~/.config/matplotlib
