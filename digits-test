@@ -3,4 +3,4 @@
 # Copyright (C) 2019, Nicholas Hubbard and contributors.
 
 set -e
-DIGITS_MODE_TEST=1 python -m nose2 --no-path-adjustment "$@"
+DIGITS_MODE_TEST=1 python -m nose2 "$@"
