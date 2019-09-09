@@ -8,10 +8,6 @@ from typing import Dict
 
 LOCAL_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# Get current __version__
-version_locals: Dict = {}
-exec(compile(open(os.path.join(LOCAL_DIR, 'digits', 'version.py'), "rb").read(), os.path.join(LOCAL_DIR, 'digits', 'version.py'), 'exec'), {}, version_locals)
-
 # Get requirements
 requirements = []
 with open(os.path.join(LOCAL_DIR, 'requirements.txt'), 'r') as infile:
@@ -30,7 +26,7 @@ with open(os.path.join(LOCAL_DIR, 'requirements_test.txt'), 'r') as infile:
 
 setuptools.setup(
     name='digits',
-    version=version_locals['__version__'],
+    version="7.0.0",
     description="NVIDIA's Deep Learning GPU Training System",
     url='https://developer.nvidia.com/digits',
     author='DIGITS Development Team',

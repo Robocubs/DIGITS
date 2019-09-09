@@ -3,7 +3,6 @@
 
 os: linux
 dist: bionic
-sudo: required
 language: python
 python: 3.6
 
@@ -15,17 +14,18 @@ env:
         - DIGITS_TEST_FRAMEWORK=tensorflow WITH_PLUGINS=false
         - DIGITS_TEST_FRAMEWORK=none
 
-cache:
-    apt: true
+addons:
+    apt:
+        packages:
+            - protobuf-compiler
+            - libprotoc-dev
 
 install:
     - mkdir -p ~/.config/matplotlib
     - echo "backend:agg" > ~/.config/matplotlib/matplotlibrc
-    - ./scripts/travis/install-protobuf.sh $PROTOBUF_ROOT
-    - pip install tornado==4.5.3
-    - pip install -r ./requirements.txt --force-reinstall
-    - pip install -r ./requirements_test.txt
+    - pip install tornado==6.0.3
+    - pip install -r requirements.txt
     - pip install -e .
 
 script:
-    - ./digits-test -v
+    - ./digits-test
