@@ -47,4 +47,3 @@ setuptools.setup(
     extras_require={'test': test_requirements},
     scripts=['digits-devserver'],
 )
->
