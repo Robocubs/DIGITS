@@ -26,4 +26,3 @@ opencv-contrib-python==4.1.1.26
 nose2==0.9.1
 beautifulsoup4==4.8.0
 flake8==3.7.8
-protobuf==3.0.0
